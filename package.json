@@ -1,0 +1,11 @@
+{
+  "name": "sistema-de-colisao",
+  "version": "1.0.0",
+  "description": "Modulo de colisão para criaçao de jogos",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rodrig Melo",
+  "license": "ISC"
+}
