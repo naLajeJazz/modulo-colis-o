@@ -1,12 +1,15 @@
+//Modulo de colisão para desenvolvimento de jogos
+//escrito por Rodrigo Melo
+
 var canvas = document.getElementById("Canvas");
 var ctx = canvas.getContext("2d");
-var info= document.getElementById("info")
-var hit=false
-var moveR=false,moveL=false,moveU=false,moveD=false;
-let ccColor="black" 
-canvas.width=200;
-canvas.Height=200;
-canvas.style.backgroundColor=ccColor
+var moveR=false,moveL=false,moveU=false,moveD=false, spd=3,hit=false;
+canvas.width=screen.width;
+canvas.height=screen.height;
+canvas.style.backgroundColor="black";
+
+let o = new Obj(400,250,128,128,"blue")
+let i = new Obj(600,350,128,128,"red")
 
 
 function Obj(x,y,w,h,c){
@@ -16,22 +19,18 @@ function Obj(x,y,w,h,c){
   this.h=h
   this.c=c
   this.collideBolean=false
-  this.draw=function(){
-    
-ctx.fillStyle = c;
-ctx.fillRect(this.x, this.y, this.w,this.h);
+  this.draw=()=>{
+    ctx.fillStyle = c;
+    ctx.fillRect(this.x, this.y, this.w,this.h);
   }
 
-this.collide=function(hitX,hitY,hitW,hitH){
+  this.collide=(hitX,hitY,hitW,hitH)=>{
         this.hitX=hitX;
         this.hitY=hitY;
         this.hitW=hitW;
         this.hitH=hitH;
-        if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hitY&&this.y<=this.hitY+this.hitH)
-        {this.collideBolean=true}else{this.collideBolean=false}}; 
-
-
-
+  if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hitY&&this.y<=this.hitY+this.hitH)
+  {this.collideBolean=true}else{this.collideBolean=false}}; 
   
 };
 
@@ -60,31 +59,21 @@ window.addEventListener("keydown",function(event){
             
     },false);
 
-let o = new Obj(49,50,32,32,"blue")
-
-let i = new Obj(150,50,32,32,"red")
-
-
-
 function game (){
-  requestAnimationFrame(game,canvas);
-
-
-  /*if( i.x <= o.x+32 && i.x+32 >= o.x && i.y+32 >= o.y && i.y<=o.y+32 ){
-    
-  hit=true;
-    
+requestAnimationFrame(game,canvas);
+//algoritmo de colisão
+ /*if( i.x <= o.x+32 && i.x+32 >= o.x && i.y+32 >= o.y && i.y<=o.y+32 ){
+    hit=true;}else{hit=false}*/
   
-  }else{hit=false}*/
-  
+ //usando somente o atributo de colisão da classe   
 i.collide(o.x,o.y,o.w,o.h)
 
 
   
-if(moveR){i.x+=1}
-if(moveL){i.x-=1}
-if(moveU){i.y-=1}
-if(moveD){i.y+=1}
+if(moveR){i.x+=spd}
+if(moveL){i.x-=spd}
+if(moveU){i.y-=spd}
+if(moveD){i.y+=spd}
   
 
   
@@ -93,24 +82,14 @@ if(moveD){i.y+=1}
   
   o.draw()
   i.draw()
-  ctx.beginPath();
-  ctx.strokeStyle = "white";
-  
-
-
-
-
-  
+ 
+  ctx.font = "60px Courier New";
+  ctx.fillStyle = "white";
+  ctx.textAlign = "center";
+  ctx.fillText(`collidebollean=${i.collideBolean}`, canvas.width/2, canvas.height-30);
 
   ctx.restore()
-info.innerHTML=`
-i.x= ${i.x} o.x+32= ${o.x+32}
-<br>
-i.x+32= ${i.x+32} o.x= ${o.x}
-<br>
 
-collidebollean=${i.collideBolean}
-
-`
-}game()
+};
+game();
 
