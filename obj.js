@@ -1,11 +1,8 @@
   
  
-
-var canvas = document.getElementById("Canvas");
-var ctx = canvas.getContext("2d");
-  
- 
- export default class Obj {
+export const canvas = document.getElementById("Canvas");
+export const ctx = canvas.getContext("2d");
+export default class Obj {
   constructor(x, y, w, h, spd, c) {
     this.x = x
     this.y = y
