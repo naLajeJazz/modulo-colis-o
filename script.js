@@ -4,8 +4,8 @@ import Obj from './obj.js'
 import {canvas} from './obj.js'
 import {ctx} from './obj.js'
 
-let moveR=false,moveL=false,moveU=false,moveD=false;
-let randMsg=['ola!','hey!','what?'], rand=Math.floor(Math.random()*3);;
+let moveR=false,moveL=false,moveU=false,moveD=false,move=false;
+
 canvas.width=screen.width;
 canvas.height=screen.height;
 canvas.style.backgroundColor="black";
@@ -24,6 +24,7 @@ window.addEventListener("keyup",()=>{
     moveR=false;
     moveU=false;
     moveD=false;
+    move=false;
 },false);
 
 window.addEventListener("keydown",function(event){
@@ -32,14 +33,17 @@ window.addEventListener("keydown",function(event){
  
         if (k == "d" ){
             moveR=true;
-                
+              move=true  
         }else if(k =="a" ){
             moveL=true;
+            move=true
             
         }else if (k=="w"){
           moveU=true;
+          move=true
         }else if (k=="s"){
           moveD=true;
+          move=true
         }
     
     },false);
@@ -58,19 +62,21 @@ if(moveD){i.y+=i.spd}
   
   for(var j = 0 ; j<3 ; j++ ){
 
-    o[j].draw()
-    o[j].x=128*j+400
+    o[j].draw("blue")
+    o[j].x=200*j+400
     o[j].collide(i.x,i.y,i.w,i.h)
   
     if(o[j].collideBolean){
-      o[j].hudMsg(o[j].x,o[j].y-64,randMsg[rand])
-      i.hudMsg(i.x,i.y-32,randMsg[rand])
+      o[j].hudMsg(o[j].x,o[j].y-64,"Hey!")
+      i.hudMsg(i.x,i.y-32,"Ola!")
     }
+    
     
   }
 
 
   i.draw("red")
+  i.hudMsg(i.x,i.y+84,move)
 
   ctx.font = "30px Courier New";
   ctx.fillStyle = "white";
