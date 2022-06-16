@@ -13,14 +13,14 @@ export default class Obj {
     
 
 
-  }
+  };
   draw(c){
     ctx.save()
     this.c=c
     ctx.fillStyle =c;
     ctx.fillRect(this.x, this.y, this.w,this.h);
     ctx.restore()
-  }
+  };
 
    collide(hitX,hitY,hitW,hitH){
     this.collideBolean = false;
@@ -32,6 +32,26 @@ if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hi
 {this.collideBolean=true}else{this.collideBolean=false}
 
 }; 
+
+hudMsg(msgX,msgY,msg){
+this.msgX=msgX;
+this.msgY=msgY;
+ctx.save()
+ctx.font = "30px Comic Sans MS";
+ctx.fillStyle = "white";
+ctx.textAlign = "center";
+ctx.fillText(msg, this.msgX, this.msgY);
+ctx.restore()
+}
+
+
+
+
+
+
+
+
+
 
 };
 

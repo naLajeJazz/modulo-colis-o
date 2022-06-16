@@ -4,7 +4,8 @@ import Obj from './obj.js'
 import {canvas} from './obj.js'
 import {ctx} from './obj.js'
 
-let moveR=false,moveL=false,moveU=false,moveD=false,hit=false;
+let moveR=false,moveL=false,moveU=false,moveD=false;
+let randMsg=['ola!','hey!','what?'], rand=Math.floor(Math.random()*3);;
 canvas.width=screen.width;
 canvas.height=screen.height;
 canvas.style.backgroundColor="black";
@@ -14,7 +15,7 @@ let o=[];
 
 for(var j = 0 ; j<3 ; j++ ){
 
-  o[j]= new Obj(400,250,64,64,0,"blue")
+  o[j]= new Obj(400,250,64,64,0)
  
 };
 
@@ -54,18 +55,22 @@ if(moveD){i.y+=i.spd}
 
 
 
-  i.draw("red")
-
- 
-//console.log(i.collideBolean)
- 
+  
   for(var j = 0 ; j<3 ; j++ ){
 
     o[j].draw()
-    o[j].x=128*j+200
+    o[j].x=128*j+400
     o[j].collide(i.x,i.y,i.w,i.h)
+  
+    if(o[j].collideBolean){
+      o[j].hudMsg(o[j].x,o[j].y-64,randMsg[rand])
+      i.hudMsg(i.x,i.y-32,randMsg[rand])
+    }
     
   }
+
+
+  i.draw("red")
 
   ctx.font = "30px Courier New";
   ctx.fillStyle = "white";
