@@ -13,7 +13,10 @@ canvas.style.backgroundColor="black";
 
 
 let i = new Obj(800,350,64,64,3);
-let o=[];
+let collisionUp= new Obj(0,0,canvas.width,32);
+let collisionLeft= new Obj(0,0,32,canvas.height);
+let collisionRight= new Obj(canvas.width-32,0,32,canvas.height);
+let collisionDown= new Obj(0,600,canvas.width,32);
 let bck = document.createElement("IMG");
 bck.setAttribute("src","./assets/sprt.png");
 
@@ -54,28 +57,34 @@ function game (){
 requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
  
+if (moveR||moveL||moveU||moveD){i.SpriteAnime(bck)}else{i.Sprite(bck)}
 
 
+collisionUp.collide(i.x,i.y,i.w,i.h)
+collisionLeft.collide(i.x,i.y,i.w,i.h)
+collisionRight.collide(i.x,i.y,i.w,i.h)
+collisionDown.collide(i.x,i.y,i.w,i.h)
+
+
+
+
+
+  if(moveR &&!collisionRight.collideBolean){ i.x+=i.spd;}
+  
+
+  if(moveL&&!collisionLeft.collideBolean){i.x-=i.spd;}
+  
+
+  if(moveU&&!collisionUp.collideBolean){i.y-=i.spd;}
+  if(moveD&&!collisionDown.collideBolean){i.y+=i.spd;}
 
 
   
-  
-if (move){i.SpriteAnime(bck)}else{i.Sprite(bck)}
-  
+  collisionUp.draw("red")
+  collisionLeft.draw("blue")
+  collisionRight.draw("green")
+  collisionDown.draw("orange")
 
-  if(moveR ){ i.x+=i.spd;}
-  
-
-  if(moveL){i.x-=i.spd}
-  
-
-  if(moveU&& move){i.y-=i.spd}
-  if(moveD){i.y+=i.spd}
-
-
-
-  
-  
   //i.draw("red")
   i.hudMsg(i.x,i.y+84,"move="+move)
   //i.Sprite(bck)
@@ -91,9 +100,8 @@ if (move){i.SpriteAnime(bck)}else{i.Sprite(bck)}
   moveR= ${moveR}
   moveU= ${moveU}
   moveD= ${moveD}
-  [0]= ${o[0].collideBolean}
-   [1]= ${o[1].collideBolean}
-    [2]= ${o[2].collideBolean}`, canvas.width/2, canvas.height-30);
+  i.collidebolean= ${collisionUp.collideBolean}
+  `, canvas.width/2, canvas.height-30);
 
 };
 game();
