@@ -53,9 +53,9 @@ Sprite=(img)=>{
 
   };
 SpriteAnime=(img,xIndex,yIndex)=>{
+    this.img=img;
     this.xIndex=xIndex;
     this.yIndex=yIndex                
-  this.img=img;
     ctx.drawImage(this.img,this.xIndex,this.yIndex,64,64,this.x,this.y,this.w,this.h); 
 
   };

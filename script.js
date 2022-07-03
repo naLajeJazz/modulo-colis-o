@@ -20,11 +20,11 @@ let collisionDown= new Obj(0,600,canvas.width,32);
 let tileDungeon= new Obj(460,160,480,480)
 
 let bck = document.createElement("IMG");
-bck.setAttribute("src","./assets/gz3c5.png");
+bck.setAttribute("src","./assets/sp8.png");
 let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2.png");
 let bck3 = document.createElement("IMG");
-bck3.setAttribute("src","./assets/sprt2.png");
+bck3.setAttribute("src","./assets/sp0.png");
 
 
 ///anima Sprite
@@ -88,7 +88,7 @@ if (moveD){
 }else if (moveU){
   i.SpriteAnime(bck,xIndex,yIndex+192)
 }
-else{i.SpriteAnime(bck,0,yIndex)}
+else{i.SpriteAnime(bck,xIndex,yIndex+256);}
 
 
 ///check collision
@@ -114,7 +114,7 @@ collisionDown.collide(i.x,i.y,i.w,i.h)
   
 
 
-
+/*
   ctx.font = "20px Courier New";
   ctx.fillStyle = "white";
   ctx.textAlign = "center";
@@ -126,6 +126,6 @@ collisionDown.collide(i.x,i.y,i.w,i.h)
   moveD= ${moveD}
   i.collidebolean= ${collisionUp.collideBolean}
   `, canvas.width/2, canvas.height-30);
-
+*/
 };
 game();
