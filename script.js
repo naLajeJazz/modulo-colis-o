@@ -1,4 +1,4 @@
-//Modulo de colisão para desenvolvimento de jogos
+//Rpg Pixel art
 //escrito por Rodrigo Melo
 import Obj from './obj.js'
 import {canvas} from './obj.js'

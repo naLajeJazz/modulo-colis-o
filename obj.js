@@ -1,4 +1,5 @@
- 
+//Rpg Pixel art
+//escrito por Rodrigo Melo
 export const canvas = document.getElementById("Canvas");
 export const ctx = canvas.getContext("2d");
 
