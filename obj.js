@@ -2,10 +2,11 @@
 export const canvas = document.getElementById("Canvas");
 export const ctx = canvas.getContext("2d");
 
-///anima imagem
+///anima Sprite
 let xIndex =0
-setInterval(()=>xIndex=32,125);
-setInterval(()=>xIndex=0,250);
+setInterval(()=>xIndex=64,100);
+setInterval(()=>xIndex=128,225);
+setInterval(()=>xIndex=192,325);
 
 
 
@@ -59,10 +60,15 @@ Sprite=(img)=>{
 SpriteAnime=(img)=>{
                     
   this.img=img;
-    ctx.drawImage(this.img,xIndex,0,32,32,this.x,this.y,this.w,this.h); 
+    ctx.drawImage(this.img,xIndex,0,64,64,this.x,this.y,this.w,this.h); 
 
   };
-
+  SpriteTiles=(img)=>{
+                    
+    this.img=img;
+      ctx.drawImage(this.img,960,1920,this.w,this.h,this.x,this.y,this.w,this.h); 
+  
+    };
 
 
 
