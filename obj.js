@@ -60,10 +60,11 @@ SpriteAnime=(img,xIndex,yIndex)=>{
     ctx.drawImage(this.img,this.xIndex,this.yIndex,64,64,this.x,this.y,this.w,this.h); 
 
   };
-  SpriteTiles=(img)=>{
-                    
+  SpriteTiles=(img,xTiles,yTiles)=>{
+    this.xTiles=xTiles;
+    this.yTiles=yTiles;              
     this.img=img;
-      ctx.drawImage(this.img,960,1920,this.w,this.h,this.x,this.y,this.w,this.h); 
+      ctx.drawImage(this.img,this.xTiles,this.yTiles,this.w,this.h,this.x,this.y,this.w,this.h); 
   
     };
 

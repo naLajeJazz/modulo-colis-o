@@ -12,19 +12,17 @@ canvas.style.backgroundColor="black";
 
 
 
-let i = new Obj(800,350,64,64,3);
+let i = new Obj(canvas.width/2+32,canvas.height/2+32,64,64,3);
 let collisionUp= new Obj(0,0,canvas.width,32);
 let collisionLeft= new Obj(0,0,32,canvas.height);
 let collisionRight= new Obj(canvas.width-32,0,32,canvas.height);
-let collisionDown= new Obj(0,600,canvas.width,32);
-let tileDungeon= new Obj(460,160,480,480)
+let collisionDown= new Obj(0,608,canvas.width,32);
+let tileDungeon= new Obj(460,160,580,580)
 
-let bck = document.createElement("IMG");
-bck.setAttribute("src","./assets/sp8.png");
+let playerSprite = document.createElement("IMG");
+playerSprite.setAttribute("src","./assets/sp0.png");
 let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2.png");
-let bck3 = document.createElement("IMG");
-bck3.setAttribute("src","./assets/sp0.png");
 
 
 ///anima Sprite
@@ -33,7 +31,8 @@ let yIndex=0
 let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
-
+let xTiles=0
+let yTiles=0
 
 
 
@@ -74,21 +73,21 @@ requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 
-tileDungeon.SpriteTiles(bck2);
+tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 
 
 ///anima Sprite
 
 if (moveD){
-  i.SpriteAnime(bck,xIndex,yIndex)
+  i.SpriteAnime(playerSprite,xIndex,yIndex)
 }else if (moveL){
-  i.SpriteAnime(bck,xIndex,yIndex+64)
+  i.SpriteAnime(playerSprite,xIndex,yIndex+64)
 }else if (moveR){
-  i.SpriteAnime(bck,xIndex,yIndex+128)
+  i.SpriteAnime(playerSprite,xIndex,yIndex+128)
 }else if (moveU){
-  i.SpriteAnime(bck,xIndex,yIndex+192)
+  i.SpriteAnime(playerSprite,xIndex,yIndex+192)
 }
-else{i.SpriteAnime(bck,xIndex,yIndex+256);}
+else{i.SpriteAnime(playerSprite,xIndex,yIndex+256);}
 
 
 ///check collision
@@ -97,10 +96,23 @@ collisionLeft.collide(i.x,i.y,i.w,i.h)
 collisionRight.collide(i.x,i.y,i.w,i.h)
 collisionDown.collide(i.x,i.y,i.w,i.h)
 
-  if(moveR &&!collisionRight.collideBolean){ i.x+=i.spd;}
-  if(moveL&&!collisionLeft.collideBolean){i.x-=i.spd;}
-  if(moveU&&!collisionUp.collideBolean){i.y-=i.spd;}
-  if(moveD&&!collisionDown.collideBolean){i.y+=i.spd;}
+///MOve player(move tile set)
+  if(moveR &&!collisionRight.collideBolean){
+     //i.x+=i.spd;
+     xTiles+=i.spd
+    }
+  if(moveL&&!collisionLeft.collideBolean){
+    //i.x-=i.spd;
+    xTiles-=i.spd
+  }
+  if(moveU&&!collisionUp.collideBolean){
+    //i.y-=i.spd;
+    yTiles-=i.spd
+  }
+  if(moveD&&!collisionDown.collideBolean){
+    //i.y+=i.spd;
+    yTiles+=i.spd
+  }
 
 
   /*
