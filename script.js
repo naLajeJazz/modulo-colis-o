@@ -27,6 +27,16 @@ let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/sprt2.png");
 
 
+///anima Sprite
+let xIndex =0
+let yIndex=0
+let animaSpd=8//tem que ser multiplos de 2
+setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
+setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
+
+
+
+
 window.addEventListener("keyup",()=>{
   moveL=false;
   moveR=false;
@@ -68,7 +78,18 @@ tileDungeon.SpriteTiles(bck2);
 
 
 ///anima Sprite
-if (moveR||moveL||moveU||moveD){i.SpriteAnime(bck)}else{i.SpriteAnime(bck)}
+
+if (moveD){
+  i.SpriteAnime(bck,xIndex,yIndex)
+}else if (moveL){
+  i.SpriteAnime(bck,xIndex,yIndex+64)
+}else if (moveR){
+  i.SpriteAnime(bck,xIndex,yIndex+128)
+}else if (moveU){
+  i.SpriteAnime(bck,xIndex,yIndex+192)
+}
+else{i.SpriteAnime(bck,0,yIndex)}
+
 
 ///check collision
 collisionUp.collide(i.x,i.y,i.w,i.h)
