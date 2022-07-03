@@ -1,7 +1,14 @@
-  
  
 export const canvas = document.getElementById("Canvas");
 export const ctx = canvas.getContext("2d");
+
+///anima imagem
+let xIndex =0
+setInterval(()=>xIndex=32,125);
+setInterval(()=>xIndex=0,250);
+
+
+
 export default class Obj {
   constructor(x, y, w, h, spd) {
     this.x = x
@@ -11,7 +18,6 @@ export default class Obj {
    
     this.spd = spd
     
-
 
   };
   draw(c){
@@ -44,7 +50,18 @@ ctx.fillText(msg, this.msgX, this.msgY);
 ctx.restore()
 }
 
+Sprite=(img)=>{
+                    
+  this.img=img;
+    ctx.drawImage(this.img,0,0,32,32,this.x,this.y,this.w,this.h); 
 
+  };
+SpriteAnime=(img)=>{
+                    
+  this.img=img;
+    ctx.drawImage(this.img,xIndex,0,32,32,this.x,this.y,this.w,this.h); 
+
+  };
 
 
 
@@ -61,13 +78,10 @@ ctx.restore()
 
 
 /*
-
 function draw(){
     ctx.fillStyle = c;
     ctx.fillRect(this.x, this.y, this.w,this.h);
   }
-
-
   function collide(hitX,hitY,hitW,hitH){
     this.hitX=hitX;
     this.hitY=hitY;
@@ -75,5 +89,4 @@ function draw(){
     this.hitH=hitH;
 if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hitY&&this.y<=this.hitY+this.hitH)
 {this.collideBolean=true}else{this.collideBolean=false}}; 
-
 */
