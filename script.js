@@ -24,10 +24,10 @@ let collisionUp= new Obj(0,0,canvas.width,32), collisionLeft= new Obj(0,0,32,can
     collisionDown= new Obj(0,608,canvas.width,32);
 
 let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
-    d1=new Obj(canvas.width/2-64,canvas.height/2-256,128,16),
-    d3=new Obj(canvas.width/2-64,canvas.height/2+226,128,16),
-    d2=new Obj(canvas.width/2-256,canvas.height/2-64,16,128),
-    d4=new Obj(canvas.width/2+242,canvas.height/2-64,16,128);
+    d1=new Obj(canvas.width/2-64,canvas.height/2-246,128,8),
+    d3=new Obj(canvas.width/2-64,canvas.height/2+240,128,8),
+    d4=new Obj(canvas.width/2-248,canvas.height/2-64,8,128),
+    d2=new Obj(canvas.width/2+240,canvas.height/2-64,8,128);
 
 
 
@@ -85,21 +85,21 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 
-d1.draw("red");
-d3.draw('green');
-d2.draw("blue");
-d4.draw("orange")
+//d1.draw("red");
+//d3.draw('green');
+//d2.draw("blue");
+//d4.draw("orange")
 
-
-if(player.y+32<d1.y){
-  player.y=d3.y
-}else if(player.y-16>d3.y){
-  player.y=d1.y
+//Transição do sprite no tile sides
+if(player.y+64<d1.y){
+  player.y=d3.y-32
+}else if(player.y>d3.y-16){
+  player.y=d1.y-16
 }
- if (player.x<d2.x-32){
-  player.x=d4.x
-}else if (player.x>d4.x){
-  player.x=d2.x
+ if (player.x>d2.x-16){
+  player.x=d4.x-8
+}else if (player.x+32<d4.x){
+  player.x=d2.x-32
 }
 
 
