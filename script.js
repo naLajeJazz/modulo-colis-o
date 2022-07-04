@@ -1,15 +1,14 @@
 //Rpg Pixel art
 //escrito por Rodrigo Melo
+
+
 import Obj from './obj.js'
 import {canvas} from './obj.js'
 import {ctx} from './obj.js'
 
-
-
 canvas.width=screen.width;
 canvas.height=screen.height;
 canvas.style.backgroundColor="black";
-
 
 
 let player = new Obj(canvas.width/2+32,canvas.height/2+32,64,64,3),
@@ -45,6 +44,10 @@ let playerSprite = document.createElement("IMG");
 playerSprite.setAttribute("src","./assets/sp8.png");
 let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2b.png");
+let bck3 = document.createElement("IMG");
+bck3.setAttribute("src","./assets/tile_3.png");
+
+
 
 
 window.addEventListener("keyup",()=>{
@@ -63,6 +66,7 @@ window.addEventListener("keydown",function(event){
         if (k == "d" ){
             moveR=true;
               move=true  
+              
         }else if(k =="a" ){
             moveL=true;
             move=true
@@ -76,31 +80,33 @@ window.addEventListener("keydown",function(event){
         }
     },false);
 
-    
-
+   
+  
+   
 function game (){
 requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
 
+
 tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 
-//d1.draw("red");
-//d3.draw('green');
-//d2.draw("blue");
-//d4.draw("orange")
 
 //Transição do sprite no tile sides
 if(player.y+64<d1.y){
-  player.y=d3.y-32
+  player.y=d3.y-32;
 }else if(player.y>d3.y-16){
   player.y=d1.y-16
 }
  if (player.x>d2.x-16){
-  player.x=d4.x-8
+  player.x=d4.x-8;
 }else if (player.x+32<d4.x){
   player.x=d2.x-32
-}
+};
+//d1.draw("red");
+//d3.draw('green');
+//d2.draw("blue");
+//d4.draw("orange")
 
 
 ///anima Sprite
@@ -115,7 +121,6 @@ if (moveD){
   player.SpriteAnime(playerSprite,xIndex,yIndex+192)
 }
 else{player.SpriteAnime(playerSprite,xIndex,yIndex+256);}
-
 
 
 /*
@@ -143,7 +148,6 @@ collisionDown.collide(player.x,player.y,player.w,player.h)
    // yTiles+=player.spd
   }
 
-  
   /*
   collisionUp.draw("red")
   collisionLeft.draw("blue")
@@ -151,22 +155,8 @@ collisionDown.collide(player.x,player.y,player.w,player.h)
   collisionDown.draw("orange")
 */
 
+  player.hudMsg(player.x,player.y,`${xTiles}`)
 
-  //player.hudMsg(player.x,player.y,`${player.x}/${player.y}`)
 
-
-/*
-  ctx.font = "20px Courier New";
-  ctx.fillStyle = "white";
-  ctx.textAlign = "center";
-  ctx.fillText(`
-  move= ${move}
-  movel= ${moveL}
-  moveR= ${moveR}
-  moveU= ${moveU}
-  moveD= ${moveD}
-  i.collidebolean= ${collisionUp.collideBolean}
-  `, canvas.width/2, canvas.height-30);
-*/
 };
 game();
