@@ -48,10 +48,15 @@ playerSprite.setAttribute("src","./assets/sp8.png");
 let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2b.png");
 let bck3 = document.createElement("IMG");
-bck3.setAttribute("src","./assets/tile_3.png");
+bck3.setAttribute("src","./assets/spriteLightc.png");
 
 
-let c=0
+let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
+let e="";
+let f="Ola Mundo!!"
+let z=0
+setInterval(()=>{e=c[Math.floor(Math.random()*c.length)];z=0},5000)
+
 
 window.addEventListener("keyup",()=>{
   moveL=false;
@@ -120,7 +125,7 @@ if(xTiles==0 &yTiles==0){
   tileId="ts23"
 }
 
-
+player.Sprite(bck3,1800,1700)
 //Transição do sprite no tile sides
 if(player.y+64<d1.y){
   yTiles-=480
@@ -150,7 +155,9 @@ if(player.y+64<d1.y){
 ///anima Sprite
 
 if (moveD){
+  
   player.SpriteAnime(playerSprite,xIndex,yIndex)
+  
 }else if (moveL){
   player.SpriteAnime(playerSprite,xIndex,yIndex+64)
 }else if (moveR){
@@ -162,13 +169,18 @@ else{player.SpriteAnime(playerSprite,xIndex,yIndex+256);}
 
 //player.draw("red")
 
-
+/*
 ///check collision
 collisionUp.collide(player.x,player.y,player.w,player.h)
 collisionLeft.collide(player.x,player.y,player.w,player.h)
 collisionRight.collide(player.x,player.y,player.w,player.h)
 collisionDown.collide(player.x,player.y,player.w,player.h)
 
+collisionUp.draw("red")
+collisionLeft.draw("blue")
+collisionRight.draw("green")
+collisionDown.draw("orange")
+*/
 
 
 
@@ -192,14 +204,10 @@ collisionDown.collide(player.x,player.y,player.w,player.h)
 
 
   
-  
-  collisionUp.draw("red")
-  collisionLeft.draw("blue")
-  collisionRight.draw("green")
-  collisionDown.draw("orange")
+  z+=0.3
 
-
- tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,`${xTiles}/${yTiles}/${tileId}`)
+ //tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`${xTiles}/${yTiles}/${z}`);
+ player.hudMsg(player.x+32,player.y-z,"#bce4ef",e)
 
 
 };

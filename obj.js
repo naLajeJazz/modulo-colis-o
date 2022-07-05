@@ -36,21 +36,23 @@ if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hi
 
 }; 
 
-hudMsg(msgX,msgY,msg){
+hudMsg(msgX,msgY,msgColor,msg){
 this.msgX=msgX;
 this.msgY=msgY;
+this.msgColor=msgColor;
 ctx.save()
-ctx.font = "30px Comic Sans MS";
-ctx.fillStyle = "white";
+ctx.font = "26px Comic Sans MS";
+ctx.fillStyle = msgColor;
 ctx.textAlign = "center";
 ctx.fillText(msg, this.msgX, this.msgY);
 ctx.restore()
 }
 
-Sprite=(img)=>{
-                    
+Sprite=(img,spw,sph)=>{
+  this.spw = spw
+  this.sph = sph           
   this.img=img;
-    ctx.drawImage(this.img,0,0,32,32,this.x,this.y,this.w,this.h); 
+  ctx.drawImage(this.img,this.x-824,this.y-640,this.spw,this.sph); 
 
   };
 SpriteAnime=(img,xIndex,yIndex)=>{
