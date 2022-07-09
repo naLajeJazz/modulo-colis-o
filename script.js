@@ -49,8 +49,8 @@ let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2c.png");
 let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/spriteLightc.png");
-let coLSp = document.createElement("IMG");
-coLSp.setAttribute("src","./assets/coL.png");
+let slime = document.createElement("IMG");
+slime.setAttribute("src","./assets/slime.png");
 
 
 let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
@@ -59,9 +59,9 @@ let f="Sala dos esqueletos"
 let z=0
 setInterval(()=>{e=c[Math.floor(Math.random()*c.length)];z=0},5000)
 
-let npc= new Obj(tileDungeon.x+128,tileDungeon.y+100,64,64,1),
-    npcRand=[1],
-    npcMove=false;
+let npc= new Obj(tileDungeon.x+60,tileDungeon.y+100,64,64,1),
+    npcRand=[3];
+   
 
 setInterval(()=>{npcRand=[Math.floor(Math.random()*5)];npc.collideBolean=false;},1000)
 
@@ -128,14 +128,16 @@ tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 ///Position Wall collision
 if(xTiles==0 &yTiles==0){
   tileId="ts7"
+ 
   //player collission wall position
   collisionUp.x=tileDungeon.x
   collisionUp.y=tileDungeon.y+16
   collisionUp.w=tileDungeon.w
   collisionDown.x=tileDungeon.x
-  collisionDown.y=tileDungeon.y+456
+  collisionDown.y=tileDungeon.y+450
   collisionDown.w=tileDungeon.w
-  collisionLeft.x=tileDungeon.x
+  collisionLeft.x=tileDungeon.x-16 
+  collisionLeft.y=tileDungeon.y
 //npc collision wall position
   npcCollisionUp.x=tileDungeon.x
   npcCollisionUp.y=tileDungeon.y+16
@@ -143,16 +145,19 @@ if(xTiles==0 &yTiles==0){
   npcCollisionDown.x=tileDungeon.x
   npcCollisionDown.y=tileDungeon.y+456
   npcCollisionDown.w=tileDungeon.w
+  npcCollisionLeft.x=tileDungeon.x-16 
+  npcCollisionLeft.y=tileDungeon.y
 
 }else if(xTiles==480 &yTiles==0){
   tileId="ts23"
-  collisionUp.y=300
+  collisionUp.y=250
+  collisionLeft.x=0
   
 }
-
-//Sobrepondo uma imagem sobre o sprite do player
+/*
+//(light effect)Sobrepondo uma imagem sobre o sprite do player
 player.Sprite(bck3,1800,1700);
-
+*/
 //Transição do sprite no tile sides
 if(player.y+64<d1.y){
   yTiles-=480
@@ -183,21 +188,21 @@ if(player.y+64<d1.y){
 
 
   if (!npcCollisionDown.collideBolean&& npcRand==0){
-      npcMove=true;
+    npc.SpriteAnime(slime,xIndex,yIndex+128)
       npc.y+=npc.spd
       
   }else if (!npcCollisionUp.collideBolean&&npcRand==1){
-    npcMove=true;
+    npc.SpriteAnime(slime,xIndex,yIndex+128)
     npc.y-=npc.spd
-  }else if (npcRand==2){
-    npcMove=true;
+  }else if (!npcCollisionRight.collideBolean&&npcRand==2){
+    npc.SpriteAnime(slime,xIndex,yIndex+64)
     npc.x+=npc.spd
-  }else if (npcRand==3){
-    npcMove=true;
+  }else if (!npcCollisionLeft.collideBolean&&npcRand==3){
+    npc.SpriteAnime(slime,xIndex,yIndex)
     npc.x-=npc.spd
-  }else if (npcRand==3){
-  
-    npc.spd=0
+  }else if (npcRand==4){
+    
+    npc.SpriteAnime(slime,xIndex,yIndex+128)
   }
 
                         //////Draw
@@ -218,7 +223,7 @@ if (moveD){
 }
 else{player.SpriteAnime(playerSprite,xIndex,yIndex+256);}
 
-//player.draw("red")
+player.draw("red")
 
 
 ///check collision
@@ -234,6 +239,7 @@ collisionDown.draw("orange")
 
 
 npc.draw("red");
+
 
 npcCollisionDown.collide(npc.x,npc.y,npc.w,npc.h);
 npcCollisionUp.collide(npc.x,npc.y,npc.w,npc.h);
@@ -262,7 +268,7 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 
                         /////HUDS
   
-  npc.hudMsg(npc.x,npc.y,"white",`${npc.collideBolean}/${npcMove}`)
+  npc.hudMsg(npc.x,npc.y,"white",`collideBolean:${npc.collideBolean}`)
   tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`${xTiles}/${yTiles}/${npcRand}`);
   z+=0.3
   if(xTiles==960 && yTiles==960){
