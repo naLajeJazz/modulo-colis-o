@@ -42,21 +42,25 @@ let xTiles=0
 let yTiles=0
 let tileId=null
 
-
+///Importando imagens
 let playerSprite = document.createElement("IMG");
-playerSprite.setAttribute("src","./assets/sp8.png");
+playerSprite.setAttribute("src","./assets/sp.png");
 let bck2 = document.createElement("IMG");
-bck2.setAttribute("src","./assets/Dungeon2b.png");
+bck2.setAttribute("src","./assets/Dungeon2c.png");
 let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/spriteLightc.png");
 
 
 let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
 let e="";
-let f="Ola Mundo!!"
+let f="Sala dos esqueletos"
 let z=0
 setInterval(()=>{e=c[Math.floor(Math.random()*c.length)];z=0},5000)
 
+let npc= new Obj(tileDungeon.x+128,tileDungeon.y+200,64,64,1),
+    npcRand=[];
+
+setInterval(()=>{npcRand=[Math.floor(Math.random()*5)]},1000)
 
 window.addEventListener("keyup",()=>{
   moveL=false;
@@ -121,11 +125,14 @@ if(xTiles==0 &yTiles==0){
   collisionDown.y=tileDungeon.y+456
   collisionDown.w=tileDungeon.w
 }else if(xTiles==480 &yTiles==0){
-  collisionUp.y=300
   tileId="ts23"
+  collisionUp.y=300
+  
 }
 
-player.Sprite(bck3,1800,1700)
+//Sobrepondo uma imagem sobre o sprite do player
+player.Sprite(bck3,1800,1700);
+
 //Transição do sprite no tile sides
 if(player.y+64<d1.y){
   yTiles-=480
@@ -150,8 +157,22 @@ if(player.y+64<d1.y){
 //d2.draw("blue");
 //d4.draw("orange");
 
+///Algoritmo de movimento de Npcs
+npc.draw("red");
+if(!npc.collideBolean){
+  if (npcRand==0){
+      npc.y+=npc.spd
+  }else if (npcRand==1){
+    npc.y-=npc.spd
+  }else if (npcRand==2){
+    npc.x+=npc.spd
+  }else if (npcRand==3){
+    npc.x-=npc.spd
+  }else if (npcRand==3){
+    npc.spd=0
+  }
 
-
+}
 ///anima Sprite
 
 if (moveD){
@@ -169,7 +190,7 @@ else{player.SpriteAnime(playerSprite,xIndex,yIndex+256);}
 
 //player.draw("red")
 
-/*
+
 ///check collision
 collisionUp.collide(player.x,player.y,player.w,player.h)
 collisionLeft.collide(player.x,player.y,player.w,player.h)
@@ -180,9 +201,9 @@ collisionUp.draw("red")
 collisionLeft.draw("blue")
 collisionRight.draw("green")
 collisionDown.draw("orange")
-*/
 
 
+npc.collide(collisionDown.x,collisionDown.y,collisionDown.w,collisionDown.h)
 
 ///MOve player ou(move tile set)
   if(moveR &&!collisionRight.collideBolean){
@@ -204,10 +225,13 @@ collisionDown.draw("orange")
 
 
   
+  
+  tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`${xTiles}/${yTiles}/${npcRand}`);
   z+=0.3
-
- //tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`${xTiles}/${yTiles}/${z}`);
- player.hudMsg(player.x+32,player.y-z,"#bce4ef",e)
+  if(xTiles==960 && yTiles==960){
+    player.hudMsg(player.x+32,player.y-z,"#bce4ef",e);
+    tileDungeon.hudMsg(tileDungeon.x-300,tileDungeon.y-64,"red",f)
+  }
 
 
 };
