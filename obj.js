@@ -20,6 +20,7 @@ export default class Obj {
   draw(c){
     ctx.save()
     this.c=c
+    ctx.globalAlpha = 0.2;
     ctx.fillStyle =c;
     ctx.fillRect(this.x, this.y, this.w,this.h);
     ctx.restore()

@@ -20,7 +20,7 @@ let player = new Obj(canvas.width/2+32,canvas.height/2+32,64,64,3),
 
 
 
-let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
+ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
     d1=new Obj(canvas.width/2-64,canvas.height/2-246,128,8),
     d3=new Obj(canvas.width/2-64,canvas.height/2+240,128,8),
     d4=new Obj(canvas.width/2-248,canvas.height/2-64,8,128),
@@ -28,7 +28,7 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
    
     ;
 
-    let collisionUp= new Obj(0,0,canvas.width,32), collisionLeft= new Obj(0,0,32,canvas.height),
+ let collisionUp= new Obj(0,0,canvas.width,32), collisionLeft= new Obj(0,0,32,canvas.height),
     collisionRight= new Obj(canvas.width-32,0,32,canvas.height),
     collisionDown= new Obj(0,608,canvas.width,32);
 
@@ -38,9 +38,9 @@ let yIndex=0
 let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
-let xTiles=0
-let yTiles=0
-let tileId=null
+ let xTiles=0
+ let yTiles=0
+ let tileId=null
 
 ///Importando imagens
 let playerSprite = document.createElement("IMG");
@@ -49,6 +49,8 @@ let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2c.png");
 let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/spriteLightc.png");
+let coLSp = document.createElement("IMG");
+coLSp.setAttribute("src","./assets/coL.png");
 
 
 let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
@@ -57,10 +59,17 @@ let f="Sala dos esqueletos"
 let z=0
 setInterval(()=>{e=c[Math.floor(Math.random()*c.length)];z=0},5000)
 
-let npc= new Obj(tileDungeon.x+128,tileDungeon.y+200,64,64,1),
-    npcRand=[];
+let npc= new Obj(tileDungeon.x+128,tileDungeon.y+100,64,64,1),
+    npcRand=[1],
+    npcMove=false;
 
-setInterval(()=>{npcRand=[Math.floor(Math.random()*5)]},1000)
+setInterval(()=>{npcRand=[Math.floor(Math.random()*5)];npc.collideBolean=false;},1000)
+
+let npcCollisionUp= new Obj(0,0,canvas.width,32), npcCollisionLeft= new Obj(0,0,32,canvas.height),
+    npcCollisionRight= new Obj(canvas.width-32,0,32,canvas.height),
+    npcCollisionDown= new Obj(0,608,canvas.width,32);
+
+
 
 window.addEventListener("keyup",()=>{
   moveL=false;
@@ -105,7 +114,7 @@ window.addEventListener("keydown",function(event){
 
 
 
-
+                      /////Game Update
 
     
 function game (){
@@ -116,14 +125,25 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 
+///Position Wall collision
 if(xTiles==0 &yTiles==0){
   tileId="ts7"
+  //player collission wall position
   collisionUp.x=tileDungeon.x
   collisionUp.y=tileDungeon.y+16
   collisionUp.w=tileDungeon.w
   collisionDown.x=tileDungeon.x
   collisionDown.y=tileDungeon.y+456
   collisionDown.w=tileDungeon.w
+  collisionLeft.x=tileDungeon.x
+//npc collision wall position
+  npcCollisionUp.x=tileDungeon.x
+  npcCollisionUp.y=tileDungeon.y+16
+  npcCollisionUp.w=tileDungeon.w
+  npcCollisionDown.x=tileDungeon.x
+  npcCollisionDown.y=tileDungeon.y+456
+  npcCollisionDown.w=tileDungeon.w
+
 }else if(xTiles==480 &yTiles==0){
   tileId="ts23"
   collisionUp.y=300
@@ -158,21 +178,31 @@ if(player.y+64<d1.y){
 //d4.draw("orange");
 
 ///Algoritmo de movimento de Npcs
-npc.draw("red");
-if(!npc.collideBolean){
-  if (npcRand==0){
+
+
+
+
+  if (!npcCollisionDown.collideBolean&& npcRand==0){
+      npcMove=true;
       npc.y+=npc.spd
-  }else if (npcRand==1){
+      
+  }else if (!npcCollisionUp.collideBolean&&npcRand==1){
+    npcMove=true;
     npc.y-=npc.spd
   }else if (npcRand==2){
+    npcMove=true;
     npc.x+=npc.spd
   }else if (npcRand==3){
+    npcMove=true;
     npc.x-=npc.spd
   }else if (npcRand==3){
+  
     npc.spd=0
   }
 
-}
+                        //////Draw
+
+
 ///anima Sprite
 
 if (moveD){
@@ -203,7 +233,14 @@ collisionRight.draw("green")
 collisionDown.draw("orange")
 
 
-npc.collide(collisionDown.x,collisionDown.y,collisionDown.w,collisionDown.h)
+npc.draw("red");
+
+npcCollisionDown.collide(npc.x,npc.y,npc.w,npc.h);
+npcCollisionUp.collide(npc.x,npc.y,npc.w,npc.h);
+npcCollisionLeft.collide(npc.x,npc.y,npc.w,npc.h);
+npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
+
+
 
 ///MOve player ou(move tile set)
   if(moveR &&!collisionRight.collideBolean){
@@ -223,14 +260,14 @@ npc.collide(collisionDown.x,collisionDown.y,collisionDown.w,collisionDown.h)
    // yTiles+=player.spd
   }
 
-
+                        /////HUDS
   
-  
+  npc.hudMsg(npc.x,npc.y,"white",`${npc.collideBolean}/${npcMove}`)
   tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`${xTiles}/${yTiles}/${npcRand}`);
   z+=0.3
   if(xTiles==960 && yTiles==960){
     player.hudMsg(player.x+32,player.y-z,"#bce4ef",e);
-    tileDungeon.hudMsg(tileDungeon.x-300,tileDungeon.y-64,"red",f)
+    
   }
 
 
