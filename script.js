@@ -39,9 +39,10 @@ let yIndex=0
 let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
- let xTiles=0
+let tileId=undefined
+let xTiles=480
  let yTiles=0
- let tileId=null
+ 
 
 ///Importando imagens
 let playerSprite = document.createElement("IMG");
@@ -122,10 +123,17 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
 
+
 ///Position Wall collision
 if(xTiles==0 &yTiles==0){
   tileId="ts7"
- 
+ }else if(xTiles==480 &yTiles==0){
+  tileId="ts23" 
+}
+
+
+
+if(tileId=="ts7"){
   //player collission wall position
   collisionUp.x=tileDungeon.x
   collisionUp.y=tileDungeon.y+16
@@ -149,26 +157,23 @@ if(xTiles==0 &yTiles==0){
   npcCollisionUp.y=tileDungeon.y+16
   npcCollisionUp.w=tileDungeon.w
   npcCollisionDown.x=tileDungeon.x
-  npcCollisionDown.y=tileDungeon.y+456
+  npcCollisionDown.y=tileDungeon.y+426
   npcCollisionDown.w=tileDungeon.w
-  npcCollisionLeft.x=tileDungeon.x-16 
+  npcCollisionLeft.x=tileDungeon.x+16 
   npcCollisionLeft.y=tileDungeon.y
-  npcCollisionRight.x=tileDungeon.x+450  
+  npcCollisionRight.x=tileDungeon.x+420  
   npcCollisionLeft.y=tileDungeon.y
  
-}else if(xTiles==480 &yTiles==0){
-  tileId="ts23"
+}else if(tileId=="ts23"){
   collisionUp.y=250
   collisionLeft.x=0
+  collisionRight.x=240
   collisionDown.y=tileDungeon
   collisionDown2.y=tileDungeon.y+288
   collisionDown.y=tileDungeon.y+288
-  
 }
-/*
-//(light effect)Sobrepondo uma imagem sobre o sprite do player
-player.Sprite(bck3,1800,1700);
-*/
+
+
 //Transição do sprite no tile sides
 if(player.y+64<d1.y){
   yTiles-=480
@@ -234,9 +239,10 @@ if (moveD){
 }
 else{player.SpriteAnime(playerSprite,xIndex,yIndex+256);}
 
-
-
-
+/*
+//(light effect)Sobrepondo uma imagem sobre o sprite do player
+player.Sprite(bck3,1800,1700);
+*/
 ///check collision
 collisionUp.collide(player.x,player.y,player.w,player.h)
 collisionLeft.collide(player.x,player.y,player.w,player.h)
@@ -304,7 +310,7 @@ npc.hudMsg(npc.x,npc.y,"white",`
 collideBolean:${npc.collideBolean}`);
 
 tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"#66adc1",`
-${xTiles}/${yTiles}/${npcRand}`);
+${xTiles}/${yTiles}/${npcRand}/${tileId}`);
 
 collisionDown.hudMsg(collisionDown.x,collisionDown.y,"yellow","1");
 collisionDown2.hudMsg(collisionDown2.x,collisionDown2.y,"yellow","2");
