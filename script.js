@@ -13,6 +13,7 @@ canvas.style.backgroundColor="gray";
 let devMode=false;
 
 let mouse= new Obj(0,0,64,64)
+let click=false
 
 
 
@@ -55,8 +56,13 @@ let xTiles=2400
 let yTiles=480
  
 let customize=0,
-name=new Obj(tileDungeon.x+240,tileDungeon.y+200,128,32),
-l1='',l2='',l3='',l4='',
+name=new Obj(tileDungeon.x+180,tileDungeon.y+200,128,32),
+n1=new Obj(tileDungeon.x+316,tileDungeon.y+234,128,32),
+nCounter=0,
+n1Txt="",
+n2='',n3='',n4='',
+btnNameR=new Obj(tileDungeon.x+200,tileDungeon.y+200,32,32),
+btnNameL=new Obj(tileDungeon.x+200,tileDungeon.y+200,32,32),
 sex='',
 skin='',
 eyes='',
@@ -84,6 +90,10 @@ let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/spriteLightc.png");
 let slime = document.createElement("IMG");
 slime.setAttribute("src","./assets/slime.png");
+let btnR = document.createElement("IMG");
+btnR.setAttribute("src","./assets/dice.png");
+let btnL = document.createElement("IMG");
+btnL.setAttribute("src","./assets/lBtn.png");
 
 
 let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
@@ -143,8 +153,17 @@ window.addEventListener("keydown",function(event){
       mouse.x=e.offsetX;
       mouse.y=e.offsetY;
   },false);
+    canvas.addEventListener('mousedown',function(){
+      click=true
+      nCounter++
+     
+  },false);
+    canvas.addEventListener('mouseup',function(){
+      click=false
+     
+  },false);
    
- 
+
 
 
 
@@ -154,17 +173,31 @@ window.addEventListener("keydown",function(event){
 function game (){
 requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
-
+if(nCounter>=4){nCounter=0}
 ///tela de costumização
+if(mouse.collideBolean&&click&&nCounter==0){
+  n1Txt="Toby"
+}else if(mouse.collideBolean&&click&&nCounter==1){
+  n1Txt="Jazzy"
+}else if(mouse.collideBolean&&click&&nCounter==2){
+  n1Txt="CrazyT"
+}else if(mouse.collideBolean&&click&&nCounter==3){
+  n1Txt="Loggy"
+}
+
+
 if (xTiles==2400&&yTiles==480){
   player.w=76;
   player.h=76;
   player.spd=0
   tileDungeon.Draw("#e2cf88")
-  tileDungeon.DrawRect("white",3)
+  tileDungeon.DrawRect("black",3)
   player.Draw('white',0.5)
   player.DrawRect("black",2)
   name.hudMsg(name.x-42,name.y+32,"black","Name :")
+  n1.hudMsg(n1.x,n1.y,"black",n1Txt)
+  btnNameR.Sprite(btnR,32,32)
+  //btnNameL.Sprite(btnL,32,32)
   
 }else{
   player.w=64;player.h=64
@@ -304,6 +337,8 @@ if(player.y+64<d1.y){
                       npcCollisionRight.Draw("white",0.2)
                       npc.Draw("red",0.2);
                       player.Draw("red",0.2)
+                      mouse.Draw("red",0.2)
+                      btnNameR.Draw("red",0.2)
                       
                       
                       }
@@ -398,7 +433,7 @@ npcCollisionLeft.collide(npc.x,npc.y,npc.w,npc.h);
 npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 
 
- 
+ mouse.collide(btnNameR.x,btnNameR.y,btnNameR.w,btnNameR.h)
 
 ///MOve player ou(move tile set(camera effect))
   if(moveR &&!collisionRight.collideBolean&&!collisionRight2.collideBolean){
@@ -431,13 +466,15 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 npc.hudMsg(npc.x,npc.y,"white",`
 collideBolean:${npc.collideBolean}`);
 
-tileDungeon.hudMsg(tileDungeon.x+138,tileDungeon.y-64,"#e2cf88",`
-mouse= ${mouse.x}
+tileDungeon.hudMsg(tileDungeon.x+198,tileDungeon.y-64,"#e2cf88",`
+mouse= ${mouse.collideBolean}
+click= ${click}
+ncounter= ${nCounter}
 xTiles= ${xTiles}
 yTiles= ${yTiles} 
 npcRand= ${npcRand} 
 tileId= ${tileId} 
-collisionUp.x= ${collisionUp.x}`);
+`);
 
 collisionDown.hudMsg(collisionDown.x,collisionDown.y,"yellow","1");
 collisionDown2.hudMsg(collisionDown2.x,collisionDown2.y,"yellow","2");
