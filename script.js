@@ -10,7 +10,7 @@ canvas.width=screen.width;
 canvas.height=screen.height;
 canvas.style.backgroundColor="black";
 
-let devMode=true;
+let devMode=false;
 
 
 let customize=0;
@@ -23,7 +23,7 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
    
     ;
 
-    let player = new Obj(tileDungeon.x+138,canvas.height,192,192,3),
+    let player = new Obj(tileDungeon.x+138,canvas.height,64,64,3),
     moveR=false,
     moveL=false,
     moveU=false,
@@ -135,6 +135,15 @@ function game (){
 requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
 
+///tela de costumização
+if (xTiles==2400&&yTiles==480){
+  player.w=192;
+  player.h=192;
+  player.spd=0
+  tileDungeon.Draw("#e2cf88")
+}else{
+  player.w=64;player.h=64
+};
 
 
 tileDungeon.SpriteTiles(bck2,xTiles,yTiles);
@@ -273,7 +282,7 @@ if(player.y+64<d1.y){
                       
                       
                       }
-                      tileDungeon.Draw("#e2cf88")
+                      
 ///Algoritmo de movimento de Npcs
 
 
