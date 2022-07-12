@@ -8,20 +8,13 @@ import {ctx} from './obj.js'
 
 canvas.width=screen.width;
 canvas.height=screen.height+8;
-canvas.style.backgroundColor="black";
+canvas.style.backgroundColor="gray";
 
 let devMode=false;
 
 let mouse= new Obj(0,0,64,64)
-let customize=0,
-name='',
-sex='',
-skin='',
-eyes='',
-hair='',
-tshirt='',
-pants='',
-boots='';
+
+
 
 let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
     d1=new Obj(canvas.width/2-64,canvas.height/2-246,128,8),
@@ -58,9 +51,19 @@ let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
-let xTiles=0
-let yTiles=0
+let xTiles=2400
+let yTiles=480
  
+let customize=0,
+name=new Obj(tileDungeon.x+240,tileDungeon.y+200,128,32),
+l1='',l2='',l3='',l4='',
+sex='',
+skin='',
+eyes='',
+hair='',
+tshirt='',
+pants='',
+boots='';
 
 ///Importando imagens
 let mouseImg = document.createElement("IMG");
@@ -141,6 +144,7 @@ window.addEventListener("keydown",function(event){
       mouse.y=e.offsetY;
   },false);
    
+ 
 
 
 
@@ -157,9 +161,11 @@ if (xTiles==2400&&yTiles==480){
   player.h=76;
   player.spd=0
   tileDungeon.Draw("#e2cf88")
+  tileDungeon.DrawRect("white",3)
   player.Draw('white',0.5)
   player.DrawRect("black",2)
-  player.Shadow("black",2)
+  name.hudMsg(name.x-42,name.y+32,"black","Name :")
+  
 }else{
   player.w=64;player.h=64
 };
@@ -302,6 +308,7 @@ if(player.y+64<d1.y){
                       
                       }
                       
+                      
 ///Algoritmo de movimento de Npcs
 
 
@@ -368,7 +375,7 @@ else{
 }
 
 mouse.Sprite(mouseImg,64,64)
-mouse.DrawCicle(100, 0, 2 * Math.PI)
+
 
 /*
 //(light effect)Sobrepondo uma imagem sobre o sprite do player
@@ -424,7 +431,7 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 npc.hudMsg(npc.x,npc.y,"white",`
 collideBolean:${npc.collideBolean}`);
 
-tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"white",`
+tileDungeon.hudMsg(tileDungeon.x+138,tileDungeon.y-64,"#e2cf88",`
 mouse= ${mouse.x}
 xTiles= ${xTiles}
 yTiles= ${yTiles} 

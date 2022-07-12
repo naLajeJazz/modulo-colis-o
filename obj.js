@@ -60,7 +60,7 @@ this.msgX=msgX;
 this.msgY=msgY;
 this.msgColor=msgColor;
 ctx.save()
-ctx.font = "18px Comic Sans MS";
+ctx.font = "24px DePixel ";
 ctx.fillStyle = msgColor;
 ctx.textAlign = "center";
 ctx.fillText(msg, this.msgX, this.msgY);
