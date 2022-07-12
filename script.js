@@ -31,7 +31,7 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
    
     ;
 
-    let player = new Obj(tileDungeon.x+138,tileDungeon.y+138,64,64,3),
+    let player = new Obj(tileDungeon.x+192,tileDungeon.y+64,64,64,3),
     moveR=false,
     moveL=false,
     moveU=false,
@@ -58,8 +58,8 @@ let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
-let xTiles=2400
-let yTiles=480
+let xTiles=0
+let yTiles=0
  
 
 ///Importando imagens
@@ -126,10 +126,13 @@ window.addEventListener("keydown",function(event){
         }else if (k=="s"){
           moveD=true;
           move=true
-        }else if (k=="h"){
+        }else if (k=="k"){
           devMode=true
         }else if (k=="j"){
           devMode=false
+        }
+        else if (k=="v"){
+          playerSpriteHair.setAttribute("src","./assets/spHair.png");
         }
     },false);
 
@@ -150,10 +153,13 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ///tela de costumização
 if (xTiles==2400&&yTiles==480){
-  player.w=128;
-  player.h=128;
+  player.w=76;
+  player.h=76;
   player.spd=0
   tileDungeon.Draw("#e2cf88")
+  player.Draw('white',0.5)
+  player.DrawRect("black",2)
+  player.Shadow("black",2)
 }else{
   player.w=64;player.h=64
 };
@@ -362,6 +368,8 @@ else{
 }
 
 mouse.Sprite(mouseImg,64,64)
+mouse.DrawCicle(100, 0, 2 * Math.PI)
+
 /*
 //(light effect)Sobrepondo uma imagem sobre o sprite do player
 player.Sprite(bck3,1800,1700);

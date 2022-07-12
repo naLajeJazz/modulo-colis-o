@@ -25,6 +25,24 @@ export default class Obj {
     ctx.fillRect(this.x, this.y, this.w,this.h);
     ctx.restore()
   };
+  DrawRect(color,lineWidth){
+    ctx.beginPath();
+    ctx.lineWidth =lineWidth;
+    ctx.strokeStyle = color;
+    ctx.rect(this.x, this.y, this.w,this.h);
+    ctx.stroke();
+  };
+  DrawCicle(radius,sAngle,eAngle){
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, radius, sAngle, eAngle);
+    ctx.stroke();
+  };
+  Shadow(color,blur){
+    
+    ctx.shadowBlur = blur;
+    ctx.shadowColor = color;
+    
+  }
 
    collide(hitX,hitY,hitW,hitH){
     this.collideBolean = false;
