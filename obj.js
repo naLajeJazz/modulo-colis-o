@@ -17,11 +17,11 @@ export default class Obj {
     
 
   };
-  draw(c){
+  Draw(color,alpha){
     ctx.save()
-    this.c=c
-    ctx.globalAlpha = 0.2;
-    ctx.fillStyle =c;
+    this.color=color
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle =color;
     ctx.fillRect(this.x, this.y, this.w,this.h);
     ctx.restore()
   };
@@ -42,7 +42,7 @@ this.msgX=msgX;
 this.msgY=msgY;
 this.msgColor=msgColor;
 ctx.save()
-ctx.font = "26px Comic Sans MS";
+ctx.font = "18px Comic Sans MS";
 ctx.fillStyle = msgColor;
 ctx.textAlign = "center";
 ctx.fillText(msg, this.msgX, this.msgY);
