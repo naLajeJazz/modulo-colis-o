@@ -7,7 +7,7 @@ import {canvas} from './obj.js'
 import {ctx} from './obj.js'
 
 canvas.width=screen.width;
-canvas.height=screen.height;
+canvas.height=screen.height+8;
 canvas.style.backgroundColor="black";
 
 let devMode=false;
@@ -31,7 +31,7 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
    
     ;
 
-    let player = new Obj(tileDungeon.x+138,canvas.height,64,64,3),
+    let player = new Obj(tileDungeon.x+138,tileDungeon.y+138,64,64,3),
     moveR=false,
     moveL=false,
     moveU=false,
@@ -59,7 +59,7 @@ setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
 let xTiles=2400
-let yTiles=0
+let yTiles=480
  
 
 ///Importando imagens
@@ -150,8 +150,8 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 ///tela de costumização
 if (xTiles==2400&&yTiles==480){
-  player.w=192;
-  player.h=192;
+  player.w=128;
+  player.h=128;
   player.spd=0
   tileDungeon.Draw("#e2cf88")
 }else{
@@ -273,9 +273,9 @@ if(player.y+64<d1.y){
 
                      //////Draw
 
-
+                     
                      if(devMode){ 
-                      mouse.Sprite(mouseImg,64,64)
+                      
                       d1.Draw("red",0.2);
                       d3.Draw('green',0.2);
                       d2.Draw("blue",0.2);
@@ -361,6 +361,7 @@ else{
 
 }
 
+mouse.Sprite(mouseImg,64,64)
 /*
 //(light effect)Sobrepondo uma imagem sobre o sprite do player
 player.Sprite(bck3,1800,1700);
