@@ -8,7 +8,7 @@ import {ctx} from './obj.js'
 
 canvas.width=screen.width;
 canvas.height=screen.height+8;
-canvas.style.backgroundColor="gray";
+canvas.style.backgroundColor="#0c0c0c";
 
 let devMode=false;
 
@@ -52,8 +52,8 @@ let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
-let xTiles=2400
-let yTiles=480
+let xTiles=0
+let yTiles=0
  
 let customize=0,
 name=new Obj(tileDungeon.x+180,tileDungeon.y+200,128,32),
@@ -75,7 +75,7 @@ boots='';
 let mouseImg = document.createElement("IMG");
 mouseImg.setAttribute("src","./assets/pointer.png");
 let playerSprite = document.createElement("IMG");
-playerSprite.setAttribute("src","./assets/sp13.png");
+playerSprite.setAttribute("src","./assets/sp15.png");
 let playerSpritePants = document.createElement("IMG");
 playerSpritePants.setAttribute("src","./assets/spPants.png");
 let playerSpriteTshirts = document.createElement("IMG");
@@ -83,7 +83,7 @@ playerSpriteTshirts.setAttribute("src","./assets/spTshirt.png");
 let playerSpriteBoot = document.createElement("IMG");
 playerSpriteBoot.setAttribute("src","./assets/spBoot.png");
 let playerSpriteHair = document.createElement("IMG");
-playerSpriteHair.setAttribute("src","./assets/spHair2.png");
+playerSpriteHair.setAttribute("src","./assets/spHair3.png");
 let bck2 = document.createElement("IMG");
 bck2.setAttribute("src","./assets/Dungeon2c.png");
 let bck3 = document.createElement("IMG");
@@ -173,6 +173,8 @@ window.addEventListener("keydown",function(event){
 function game (){
 requestAnimationFrame(game,canvas);
 ctx.clearRect(0,0,canvas.width,canvas.height);
+
+
 if(nCounter>=4){nCounter=0}
 ///tela de costumização
 if(mouse.collideBolean&&click&&nCounter==0){
@@ -185,15 +187,16 @@ if(mouse.collideBolean&&click&&nCounter==0){
   n1Txt="Loggy"
 }
 
-
+tileDungeon.DrawRect("black",2)
 if (xTiles==2400&&yTiles==480){
+  canvas.style.backgroundColor="gray";
   player.w=76;
   player.h=76;
   player.spd=0
   tileDungeon.Draw("#e2cf88")
-  tileDungeon.DrawRect("black",3)
+  tileDungeon.DrawRect("white",2)
   player.Draw('white',0.5)
-  player.DrawRect("black",2)
+  player.DrawRect("white",2)
   name.hudMsg(name.x-42,name.y+32,"black","Name :")
   n1.hudMsg(n1.x,n1.y,"black",n1Txt)
   btnNameR.Sprite(btnR,32,32)
