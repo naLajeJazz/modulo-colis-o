@@ -13,7 +13,15 @@ canvas.style.backgroundColor="black";
 let devMode=false;
 
 
-let customize=0;
+let customize=0,
+name='',
+sex='',
+skin='',
+eyes='',
+hair='',
+tshirt='',
+pants='',
+boots='';
 
 let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
     d1=new Obj(canvas.width/2-64,canvas.height/2-246,128,8),
