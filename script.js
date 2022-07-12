@@ -12,7 +12,7 @@ canvas.style.backgroundColor="black";
 
 let devMode=false;
 
-
+let mouse= new Obj(0,0,64,64)
 let customize=0,
 name='',
 sex='',
@@ -63,6 +63,8 @@ let yTiles=0
  
 
 ///Importando imagens
+let mouseImg = document.createElement("IMG");
+mouseImg.setAttribute("src","./assets/pointer.png");
 let playerSprite = document.createElement("IMG");
 playerSprite.setAttribute("src","./assets/sp13.png");
 let playerSpritePants = document.createElement("IMG");
@@ -131,7 +133,10 @@ window.addEventListener("keydown",function(event){
         }
     },false);
 
-    
+    canvas.addEventListener('mousemove',function(e){
+      mouse.x=e.offsetX;
+      mouse.y=e.offsetY;
+  },false);
    
 
 
@@ -270,7 +275,7 @@ if(player.y+64<d1.y){
 
 
                      if(devMode){ 
-
+                      mouse.Sprite(mouseImg,64,64)
                       d1.Draw("red",0.2);
                       d3.Draw('green',0.2);
                       d2.Draw("blue",0.2);
@@ -411,6 +416,7 @@ npc.hudMsg(npc.x,npc.y,"white",`
 collideBolean:${npc.collideBolean}`);
 
 tileDungeon.hudMsg(tileDungeon.x,tileDungeon.y-64,"white",`
+mouse= ${mouse.x}
 xTiles= ${xTiles}
 yTiles= ${yTiles} 
 npcRand= ${npcRand} 

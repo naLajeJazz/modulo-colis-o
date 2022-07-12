@@ -53,7 +53,7 @@ Sprite=(img,spw,sph)=>{
   this.spw = spw
   this.sph = sph           
   this.img=img;
-  ctx.drawImage(this.img,this.x-824,this.y-640,this.spw,this.sph); 
+  ctx.drawImage(this.img,this.x,this.y,this.spw,this.sph); 
 
   };
 SpriteAnime=(img,xIndex,yIndex)=>{
