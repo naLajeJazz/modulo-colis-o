@@ -10,7 +10,7 @@ canvas.width=screen.width;
 canvas.height=screen.height+8;
 canvas.style.backgroundColor="black";
 
-let devMode=false;
+let devMode=true;
 
 let mouse= new Obj(0,0,64,64)
 let click=false
@@ -30,7 +30,9 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
     moveL=false,
     moveU=false,
     moveD=false,
-    move=false;
+    move=false,
+    melee='',
+    meleeAtack=new Obj(player.x,player.y,64,64);
 
     
 let collisionUp= new Obj(0,0,canvas.width,32),
@@ -415,6 +417,32 @@ else{
 
 }
 
+if(click&&mouse.x>player.x+64&&mouse.y>player.y&&mouse.y<player.y+64){
+  melee="R";
+  meleeAtack.Draw("red",1);
+  meleeAtack.x=player.x+64;
+  meleeAtack.y=player.y;
+}else if (click&&mouse.x<player.x&&mouse.y>player.y&&mouse.y<player.y+64){
+  melee="L";
+  meleeAtack.Draw("red",1);
+  meleeAtack.x=player.x-64;
+  meleeAtack.y=player.y;
+}else if(click&&mouse.x>player.x&&mouse.x<player.x+64&&mouse.y<player.y){
+  melee="U";
+  meleeAtack.Draw("red",1);
+  meleeAtack.x=player.x;
+  meleeAtack.y=player.y-64;
+}else if(click&&mouse.x>player.x&&mouse.x<player.x+64&&mouse.y>player.y+64){
+  melee="D";
+  meleeAtack.Draw("red",1);
+  meleeAtack.x=player.x;
+  meleeAtack.y=player.y+64;
+}else{
+  melee="";
+ 
+  meleeAtack.x=player.x;
+  meleeAtack.y=player.y;}
+
 //mouse.Sprite(mouseImg,64,64)
 
 
@@ -481,6 +509,7 @@ ncounter= ${nCounter}
 xTiles= ${xTiles}
 yTiles= ${yTiles} 
 npcRand= ${npcRand} 
+melee= ${melee} 
 tileId= ${tileId} 
 `);
 
