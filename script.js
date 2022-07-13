@@ -8,7 +8,7 @@ import {ctx} from './obj.js'
 
 canvas.width=screen.width;
 canvas.height=screen.height+8;
-canvas.style.backgroundColor="#0c0c0c";
+canvas.style.backgroundColor="black";
 
 let devMode=false;
 
@@ -52,16 +52,16 @@ let animaSpd=8//tem que ser multiplos de 2
 setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
-let xTiles=0
-let yTiles=0
+let xTiles=2400
+let yTiles=480
  
 let customize=0,
-name=new Obj(tileDungeon.x+180,tileDungeon.y+200,128,32),
+name=new Obj(tileDungeon.x+194,tileDungeon.y+200,128,32),
 n1=new Obj(tileDungeon.x+316,tileDungeon.y+234,128,32),
 nCounter=0,
 n1Txt="",
 n2='',n3='',n4='',
-btnNameR=new Obj(tileDungeon.x+200,tileDungeon.y+200,32,32),
+dice=new Obj(tileDungeon.x+200,tileDungeon.y+208,32,32),
 btnNameL=new Obj(tileDungeon.x+200,tileDungeon.y+200,32,32),
 sex='',
 skin='',
@@ -73,7 +73,7 @@ boots='';
 
 ///Importando imagens
 let mouseImg = document.createElement("IMG");
-mouseImg.setAttribute("src","./assets/pointer.png");
+mouseImg.setAttribute("src","./assets/spPointer.png");
 let playerSprite = document.createElement("IMG");
 playerSprite.setAttribute("src","./assets/sp15.png");
 let playerSpritePants = document.createElement("IMG");
@@ -85,13 +85,13 @@ playerSpriteBoot.setAttribute("src","./assets/spBoot.png");
 let playerSpriteHair = document.createElement("IMG");
 playerSpriteHair.setAttribute("src","./assets/spHair3.png");
 let bck2 = document.createElement("IMG");
-bck2.setAttribute("src","./assets/Dungeon2c.png");
+bck2.setAttribute("src","./assets/Dungeon2d.png");
 let bck3 = document.createElement("IMG");
 bck3.setAttribute("src","./assets/spriteLightc.png");
 let slime = document.createElement("IMG");
 slime.setAttribute("src","./assets/slime.png");
-let btnR = document.createElement("IMG");
-btnR.setAttribute("src","./assets/dice.png");
+let diceImg = document.createElement("IMG");
+diceImg.setAttribute("src","./assets/dice.png");
 let btnL = document.createElement("IMG");
 btnL.setAttribute("src","./assets/lBtn.png");
 
@@ -147,6 +147,9 @@ window.addEventListener("keydown",function(event){
         else if (k=="v"){
           playerSpriteHair.setAttribute("src","./assets/spHair.png");
         }
+        else if (k=="q"){
+          xTiles-=480
+        }
     },false);
 
     canvas.addEventListener('mousemove',function(e){
@@ -187,9 +190,9 @@ if(mouse.collideBolean&&click&&nCounter==0){
   n1Txt="Loggy"
 }
 
-tileDungeon.DrawRect("black",2)
+tileDungeon.DrawRect("gray",2)
 if (xTiles==2400&&yTiles==480){
-  canvas.style.backgroundColor="gray";
+  canvas.style.backgroundColor="black";
   player.w=76;
   player.h=76;
   player.spd=0
@@ -197,13 +200,13 @@ if (xTiles==2400&&yTiles==480){
   tileDungeon.DrawRect("white",2)
   player.Draw('white',0.5)
   player.DrawRect("white",2)
-  name.hudMsg(name.x-42,name.y+32,"black","Name :")
+  name.hudMsg(name.x-42,name.y+32,"white","name:")
   n1.hudMsg(n1.x,n1.y,"black",n1Txt)
-  btnNameR.Sprite(btnR,32,32)
+  dice.Sprite(diceImg,32,32)
   //btnNameL.Sprite(btnL,32,32)
   
 }else{
-  player.w=64;player.h=64
+  player.w=64;player.h=64;player.spd=3
 };
 
 
@@ -341,7 +344,7 @@ if(player.y+64<d1.y){
                       npc.Draw("red",0.2);
                       player.Draw("red",0.2)
                       mouse.Draw("red",0.2)
-                      btnNameR.Draw("red",0.2)
+                      dice.Draw("red",0.2)
                       
                       
                       }
@@ -412,8 +415,10 @@ else{
 
 }
 
-mouse.Sprite(mouseImg,64,64)
+//mouse.Sprite(mouseImg,64,64)
 
+
+if (click){mouse.SpriteAnime(mouseImg,0,yIndex+64)}else{mouse.SpriteAnime(mouseImg,0,yIndex)}
 
 /*
 //(light effect)Sobrepondo uma imagem sobre o sprite do player
@@ -436,7 +441,7 @@ npcCollisionLeft.collide(npc.x,npc.y,npc.w,npc.h);
 npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 
 
- mouse.collide(btnNameR.x,btnNameR.y,btnNameR.w,btnNameR.h)
+ mouse.collide(dice.x,dice.y,dice.w,dice.h)
 
 ///MOve player ou(move tile set(camera effect))
   if(moveR &&!collisionRight.collideBolean&&!collisionRight2.collideBolean){
@@ -461,7 +466,7 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
   
   z+=0.3
   if(xTiles==960 && yTiles==960){
-    player.hudMsg(player.x+32,player.y-z,"#bce4ef",e);
+    player.hudMsg(player.x+32,player.y-z,"white",e);
     
   }
 
