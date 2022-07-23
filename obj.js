@@ -96,22 +96,3 @@ SpriteAnime=(img,xIndex,yIndex)=>{
 
 
 };
-
-
-
-
-
-
-/*
-function draw(){
-    ctx.fillStyle = c;
-    ctx.fillRect(this.x, this.y, this.w,this.h);
-  }
-  function collide(hitX,hitY,hitW,hitH){
-    this.hitX=hitX;
-    this.hitY=hitY;
-    this.hitW=hitW;
-    this.hitH=hitH;
-if(this.x<=this.hitX+this.hitW&&this.x+this.w>=this.hitX&&this.y+this.h>=this.hitY&&this.y<=this.hitY+this.hitH)
-{this.collideBolean=true}else{this.collideBolean=false}}; 
-*/

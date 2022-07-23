@@ -5,12 +5,25 @@
 import Obj from './obj.js'
 import {canvas} from './obj.js'
 import {ctx} from './obj.js'
+import{mouseImg,
+  playerSprite,
+  playerSpritePants,
+  playerSpriteTshirts,
+  playerSpriteHair,
+  playerSpriteBoot,
+  bck2,
+  bck3,
+  slime,
+  diceImg,
+  btnL,
+  meleeImg,
+  testImg} from './Img.js'
 
 canvas.width=screen.width;
 canvas.height=screen.height+8;
 canvas.style.backgroundColor="black";
 
-let devMode=true;
+let devMode=false;
 
 let mouse= new Obj(0,0,64,64)
 let click=false
@@ -31,7 +44,7 @@ let tileDungeon= new Obj(canvas.width/2-240,canvas.height/2-240,480,480),
     moveU=false,
     moveD=false,
     move=false,
-    melee='',
+    melee=false,
     meleeAtack=new Obj(player.x,player.y,64,64);
 
     
@@ -51,11 +64,11 @@ let npcCollisionUp= new Obj(0,0,canvas.width,32),
 let xIndex=0
 let yIndex=0
 let animaSpd=8//tem que ser multiplos de 2
-setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem
+setInterval(()=>xIndex+=64,1000/animaSpd);//a cada segundo pula 64 px na imagem, quatro frames na horizontal
 setInterval(()=>xIndex=0,4000/animaSpd);//quando chegar na ultima imagem volta pra primeira
 let tileId=undefined
-let xTiles=2400
-let yTiles=480
+let xTiles=0
+let yTiles=0
  
 let customize=0,
 name=new Obj(tileDungeon.x+194,tileDungeon.y+200,128,32),
@@ -73,6 +86,8 @@ tshirt='',
 pants='',
 boots='';
 
+let test =new Obj(tileDungeon.x+200,tileDungeon.y+208,64,64)
+/*
 ///Importando imagens
 let mouseImg = document.createElement("IMG");
 mouseImg.setAttribute("src","./assets/spPointer.png");
@@ -96,7 +111,11 @@ let diceImg = document.createElement("IMG");
 diceImg.setAttribute("src","./assets/dice.png");
 let btnL = document.createElement("IMG");
 btnL.setAttribute("src","./assets/lBtn.png");
-
+let meleeImg = document.createElement("IMG");
+meleeImg.setAttribute("src","./assets/melee.png");
+//let testImg = document.createElement("IMG");
+//testImg.setAttribute("src","./assets/test.png");
+*/
 
 let c=["","","","","","Onde eu estou?","Que lugar é esse?","Onde estão todos?","","","","",""];
 let e="";
@@ -165,6 +184,10 @@ window.addEventListener("keydown",function(event){
   },false);
     canvas.addEventListener('mouseup',function(){
       click=false
+      
+  },false);
+    canvas.addEventListener("dblclick",function(){
+      melee=true
      
   },false);
    
@@ -325,7 +348,8 @@ if(player.y+64<d1.y){
 };
 
                      //////Draw
-
+//test.Draw("white",0.8);
+test.SpriteAnime(testImg,xIndex,yIndex)
                      
                      if(devMode){ 
                       
@@ -352,11 +376,13 @@ if(player.y+64<d1.y){
                       }
                       
                       
-///Algoritmo de movimento de Npcs
+
 
 
 
 if(tileId=="ts7"){ 
+  
+  ///Algoritmo de movimento de Npcs
   if (!npcCollisionDown.collideBolean&& npcRand==0){
       npc.SpriteAnime(slime,xIndex,yIndex+128)
       npc.y+=npc.spd
@@ -417,29 +443,34 @@ else{
 
 }
 
+    ///Melee Atack
+
 if(click&&mouse.x>player.x+64&&mouse.y>player.y&&mouse.y<player.y+64){
-  melee="R";
-  meleeAtack.Draw("red",1);
-  meleeAtack.x=player.x+64;
+  
+  
+  if(devMode){meleeAtack.Draw("red",1);}
+  meleeAtack.SpriteAnime(meleeImg,xIndex,yIndex)
+  meleeAtack.x=player.x+46; 
   meleeAtack.y=player.y;
 }else if (click&&mouse.x<player.x&&mouse.y>player.y&&mouse.y<player.y+64){
-  melee="L";
-  meleeAtack.Draw("red",1);
-  meleeAtack.x=player.x-64;
+  
+  if(devMode){meleeAtack.Draw("red",1);}
+  meleeAtack.SpriteAnime(meleeImg,xIndex,yIndex+64)
+  meleeAtack.x=player.x-46;
   meleeAtack.y=player.y;
 }else if(click&&mouse.x>player.x&&mouse.x<player.x+64&&mouse.y<player.y){
-  melee="U";
+  
   meleeAtack.Draw("red",1);
   meleeAtack.x=player.x;
   meleeAtack.y=player.y-64;
 }else if(click&&mouse.x>player.x&&mouse.x<player.x+64&&mouse.y>player.y+64){
-  melee="D";
+ 
   meleeAtack.Draw("red",1);
   meleeAtack.x=player.x;
   meleeAtack.y=player.y+64;
 }else{
-  melee="";
- 
+  
+
   meleeAtack.x=player.x;
   meleeAtack.y=player.y;}
 
@@ -470,7 +501,7 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
 
 
  mouse.collide(dice.x,dice.y,dice.w,dice.h)
-
+ 
 ///MOve player ou(move tile set(camera effect))
   if(moveR &&!collisionRight.collideBolean&&!collisionRight2.collideBolean){
      player.x+=player.spd;
@@ -493,7 +524,7 @@ npcCollisionRight.collide(npc.x,npc.y,npc.w,npc.h);
   
   
   z+=0.3
-  if(xTiles==960 && yTiles==960){
+  if(xTiles==0 && yTiles==0){
     player.hudMsg(player.x+32,player.y-z,"white",e);
     
   }
